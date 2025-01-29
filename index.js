@@ -1,5 +1,5 @@
 const express = require('express');
-require('../src/Controllers/user.js');
+const userrouter=require('./src/controller/user.js');
 const app = express();
 const PORT = 3000;
 
