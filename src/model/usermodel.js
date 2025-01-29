@@ -1,67 +1,43 @@
-const {model,Schema} = require('mongoose');
+const mongoose = require('mongoose');
 
-const userSchema =new Schema({
-    name:{
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: Number,
+  },
+  addresses: [
+    {
+      country: {
         type: String,
-        required: [true, "Please enter your name!"],
       },
-      email:{
+      city: {
         type: String,
-        required: [true, "Please enter your email!"],
       },
-      password:{
+      address1: {
         type: String,
-        required: [true, "Please enter your password"],
-        minLength: [4, "Password should be greater than 4 characters"],
-        select: false,
       },
-      phoneNumber:{
+      address2: {
+        type: String,
+      },
+      zipCode: {
         type: Number,
       },
-      addresses:[
-        {
-          country: {
-            type: String,
-          },
-          city:{
-            type: String,
-          },
-          address1:{
-            type: String,
-          },
-          address2:{
-            type: String,
-          },
-          zipCode:{
-            type: Number,
-          },
-          addressType:{
-            type: String,
-          },
-        }
-      ],
-      role:{
-        type: String,
-        default: "user",
-      },
-      avatar:{
-        public_id: {
-          type: String,
-          required: true,
-        },
-        url: {
-          type: String,
-          required: true,
-        },
-     },
-     createdAt:{
-      type: Date,
-      default: Date.now(),
-     },
-     resetPasswordToken: String,
-     resetPasswordTime: Date,
-    });
+    },
+  ],
+});
 
-    const userModel=model('User',userSchema);  
-    
-    module.exports=userModel;
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
