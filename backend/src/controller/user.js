@@ -1,8 +1,8 @@
 const {Router}= require("express");
-const userModel = require("../model/userModel");
+const userModel= require("../model/userModel");
 const {upload}= require("../Middleware/multer");  
 import bcrypt from "bcrypt"; 
-const jwt = require("jsonwebtoken");
+const jwt= require("jsonwebtoken");
 require("dotenv").config({path:'./src/Config/.env'});
 
 const userrouter = Router();
