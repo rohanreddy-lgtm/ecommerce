@@ -1,6 +1,5 @@
-const {connect}=require('mongoose');
-
-const connectDB=async(url)=>{
+const {Connect}=require('mongoose');
+const connectDB = async(url)=>{
     try{
         await connect(url);
         console.log('Database connected successfully');
