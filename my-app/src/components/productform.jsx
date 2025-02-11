@@ -1,6 +1,9 @@
-import { useState } from 'react'
 
-function ProductForm() {
+import { useState } from 'react'
+import axios from 'axios'
+import { AiOutlinePlusCircle } from 'react-icons/ai';
+
+function Productform() {
 const [name, setName] = useState('');
 const [price, setPrice] = useState('');
 const [description, setDescription] = useState('');
@@ -9,22 +12,44 @@ const [stock, setStock] = useState('');
 const [tags, setTags] = useState('');
 const [email, setEmail] = useState('');
 
+const [preview, setPreview] = useState([]);
 const [image, setImage] = useState([]);
-const [preview, setPreview] = useState(null);
-const handlesubmit = (e) => {
-  e.preventDefault();
-  // Add your form submission logic here
-  console.log({
-    name,
-    price,
-    description,
-    category,
-    stock,
-    tags,
-    email,
-    image,
-    preview
-  });
+
+const handleImage = (e) => {
+    const file = Array.from(e.target.files)
+    setImage((pre)=>pre.concat(file))
+    const img = file.map((file) => URL.createObjectURL(file))
+    setPreview((pre) => pre.concat(img))
+}
+
+const handlesubmit = async (e) => {
+    e.preventDefault()
+    let formData = new FormData()
+    formData.append('name', name)
+    formData.append('price', price)
+    formData.append('description', description)
+    formData.append('category', category)
+    formData.append('stock', stock)
+    formData.append('tags', tags)
+    formData.append('email', email)
+    image.forEach((img) => {
+        formData.append('image', img)
+    })
+
+    console.log(formData)
+    const res = await axios.post('http://localhost:5000/product', formData, {headers: {'content-type': 'multipart/form-data'}})
+
+    if (res.status === 200) {
+        setEmail('')
+        setName('')
+        setTags('')
+        setCategory('')
+        setStock('')
+        setPrice('')
+        setDescription('')
+        setImage([])
+        setPreview([])
+    }
 }
 
 
@@ -60,19 +85,25 @@ const handlesubmit = (e) => {
                 <input type="text" onChange={(e)=>setDescription(e.target.value)} value={description} required placeholder='Enter description' />
             </div>
             <div>
-                <label htmlFor="">Preview</label>
-                <input type="file" onChange={(e)=>setPreview(e.target.files[0])} required />
-            </div>
-            <div>
                 <label htmlFor="">Image</label>
-                <input type="file" onChange={(e)=>setImage(e.target.files[0])} required />
+                <input type="file" onChange={(e)=>handleImage(e)} required multiple id='upload' />
             </div>
             <div>
-                <button type="submit">Submit</button>
+                <AiOutlinePlusCircle htmlFor="upload"/>
+            </div>
+            <div>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                Button
+            </button>
+            </div>
+            <div>
+                {preview.map((img, index) => {
+                    return <img src={img} key={index} alt='' />
+                })}
             </div>
         </form>
     </div>
   )
 }
 
-export default ProductForm
+export default Productform
