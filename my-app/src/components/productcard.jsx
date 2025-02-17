@@ -1,46 +1,47 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
+function Product({ _id, name, images, description, price }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!images || images.length === 0) return;
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, [images]);
 
-
-export const Productcard = ({image,name,price,description}) => {
-
-  const [currentindex, setcurrentindex] = useState(0);
-
-  useEffect(() => {
-    const interval= setInterval(()=>{
-        setcurrentindex((prev) => (prev + 1)%image.length);
-
-      },2000)
-    return ()=>{
-      clearInterval(interval);
-    } 
-   
-
-  },[image])
-
-  const currentimage = image[currentindex];
-
-  return (
-    <div className="bg-neutral-200 p-4 rounded-lg shadow-md flex justify-between flex-col">
-      <div className='w-full'>
-        <img src={currentimage} alt={name} className='w-full h-56 object-cover rounded-lg mb-2'/>
-        <h1 className='text-lg font-bold'>{name}</h1>
-        <h3 className='text-sm opacity-50 line-clamp-2'>{description}</h3>
+    const currentImage = images[currentIndex];
+    
+    return (
+        <div className="bg-neutral-200 p-4 rounded-lg shadow-md flex flex-col justify-between">
+      <div className="w-full ">
+        <img src={`http://localhost:8000${currentImage}`} // Ensure the URL is correct\
+          alt={name}
+          className="w-full h-56 object-cover rounded-lg mb-2"
+        />
+        <h2 className="text-lg font-bold">{name}</h2>
+        <p className="text-sm opacity-75 mt-2">{description}</p>
       </div>
-      <div className='w-full'>
-  <h1 className='text-lg font-bold my-2'>${price}</h1>
-    <button className='w-full text-white px-4 py-2 rounded-md bg-neutral-900'>Buy Now</button>
-    </div>
+      <div className="w-full mt-4">
+        <p className="text-lg font-bold my-2">${price.toFixed(2)}</p>
+        <button className="w-full text-white px-4 py-2 rounded-md bg-neutral-900 hover:bg-neutral-700 transition duration-300"
+          onClick={() => navigate(`/product/${_id}`)}
+        >
+          More Info
+        </button>
+      </div>
     </div>
   );
 }
-
-Productcard.propTypes = {
-  image: PropTypes.array.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired,
+Product.propTypes = {
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    description: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
 };
 
-export default Productcard;
+export default Product;
