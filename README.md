@@ -32,9 +32,22 @@ We’ll integrate **bcrypt** for password hashing to ensure user data security, 
 
 For this milestone, we successfully created the **Login Page** using React's Create React App (CRA). To improve the user interface and design, we will be updating the layout with **Tailwind CSS** for styling and incorporate **React-Icons** for intuitive icons. Tailwind CSS will help us streamline the design process with its utility-first classes, making the UI responsive and visually appealing.
 
-The Login Page will include fields for the user's email and password, and will handle form validation, state management, and error handling for incorrect login attempts. React Icons will be utilized for visual appeal and ease of use, enhancing the overall experience.
 
----
+Product Management System – Milestone 12
+
+In this milestone, we’ll create an API endpoint to retrieve all products filtered by a user’s email and send that data to the frontend.
+
+We will also build a function in the frontend to fetch this filtered data and display it dynamically using the ProductCard component.
+
+Why This Milestone is Important
+
+Understanding Data Filtering: Learn how to filter data based on specific criteria (e.g., user email) and send only relevant data to the frontend.
+
+
+Dynamic Data Handling: Enhance your ability to retrieve and display data dynamically using React components.
+
+
+
 
 ### Milestone 3: Backend Structure and Initial Setup**
 
@@ -58,7 +71,18 @@ creating user model, user controller and Multer support
 : Backend Structure and Initial Setup**
 Password Encryption and User Data Storage
 
-Password Hashing:
+Practical Experience with Filtering: This skill is essential for real-world applications, like showing only products created by a specific user.
+
+Steps for Milestone 12
+    
+  Backend: Writing the Endpoint to Retrieve Filtered Product Data
+
+We’ll create a GET endpoint that fetches all products associated with a specific user’s email from the database.
+
+
+
+Frontend: Fetching Filtered Data from the Backend
+
 
 Implement bcrypt to hash the user's password during the signup process.
 Ensure that the hashed password is stored in the database instead of the plaintext version to enhance security.
@@ -114,3 +138,18 @@ Created singleproduct.jsx. The pages is made to show details about the product. 
 
 ## Milestone 17 & 18
 In these two Milestones we first added the cart details to the schema. Then we also created a post request for sending the details and storing them on the database. We also created an endpoint to receive request from cart page.
+
+On the frontend, we’ll create a function to call the new API endpoint and fetch products for a specific user email.
+
+ Creating the Product Card Component
+ 
+This component will display each product’s details, just like in previous milestones.
+
+How This Works
+
+Backend: The GET endpoint filters the products in MongoDB by the userEmail field and returns the results.
+
+Frontend: The fetchUserProducts function fetches the filtered data based on the provided email.
+
+Dynamic Rendering: The data is passed to the ProductCard component, which renders a card for each product that belongs to the specified user.
+
