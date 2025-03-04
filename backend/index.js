@@ -1,29 +1,25 @@
 const express = require('express');
-const { connectDB } = require('./src/Database/db');
-const userRouter = require('./src/Controllers/users');
-const productrouter = require('./src/Controllers/Products');
+const mongoose = require('mongoose');
+const userRouter = require('./Controllers/users');
+
 const app = express();
+const PORT = 3000;
 
-require('dotenv').config({
-    path: './src/config/.env'
-});
-const port = process.env.PORT || 8080;
-const url = process.env.db_url;
+// Middleware to parse JSON bodies
+app.use(express.json());
 
-app.listen(port, async() => {
+// ...existing code...
 
-  try{
-    await connectDB(url);
-    console.log(`Server is running on port ${port}`);
-  }
-  catch(error){
-    console.error(error);
-  }
-});
+app.use('/api', userRouter);
 
-app.use('/auth',userRouter)
-app.use('/product',productrouter)
-
-app.get('/', (req, res) => {    
-    res.send('Hello World!');
+mongoose.connect('mongodb://localhost:27017/ecommerce', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('Connected to the database');
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}).catch((error) => {
+  console.error('Database connection error:', error);
 });
