@@ -32,22 +32,9 @@ We’ll integrate **bcrypt** for password hashing to ensure user data security, 
 
 For this milestone, we successfully created the **Login Page** using React's Create React App (CRA). To improve the user interface and design, we will be updating the layout with **Tailwind CSS** for styling and incorporate **React-Icons** for intuitive icons. Tailwind CSS will help us streamline the design process with its utility-first classes, making the UI responsive and visually appealing.
 
+The Login Page will include fields for the user's email and password, and will handle form validation, state management, and error handling for incorrect login attempts. React Icons will be utilized for visual appeal and ease of use, enhancing the overall experience.
 
-Product Management System – Milestone 12
-
-In this milestone, we’ll create an API endpoint to retrieve all products filtered by a user’s email and send that data to the frontend.
-
-We will also build a function in the frontend to fetch this filtered data and display it dynamically using the ProductCard component.
-
-Why This Milestone is Important
-
-Understanding Data Filtering: Learn how to filter data based on specific criteria (e.g., user email) and send only relevant data to the frontend.
-
-
-Dynamic Data Handling: Enhance your ability to retrieve and display data dynamically using React components.
-
-
-
+---
 
 ### Milestone 3: Backend Structure and Initial Setup**
 
@@ -71,18 +58,7 @@ creating user model, user controller and Multer support
 : Backend Structure and Initial Setup**
 Password Encryption and User Data Storage
 
-Practical Experience with Filtering: This skill is essential for real-world applications, like showing only products created by a specific user.
-
-Steps for Milestone 12
-    
-  Backend: Writing the Endpoint to Retrieve Filtered Product Data
-
-We’ll create a GET endpoint that fetches all products associated with a specific user’s email from the database.
-
-
-
-Frontend: Fetching Filtered Data from the Backend
-
+Password Hashing:
 
 Implement bcrypt to hash the user's password during the signup process.
 Ensure that the hashed password is stored in the database instead of the plaintext version to enhance security.
@@ -139,17 +115,21 @@ Created singleproduct.jsx. The pages is made to show details about the product. 
 ## Milestone 17 & 18
 In these two Milestones we first added the cart details to the schema. Then we also created a post request for sending the details and storing them on the database. We also created an endpoint to receive request from cart page.
 
-On the frontend, we’ll create a function to call the new API endpoint and fetch products for a specific user email.
 
- Creating the Product Card Component
- 
-This component will display each product’s details, just like in previous milestones.
+## Milestone 19
 
-How This Works
+**Backend:** In this milestone I added the endpoint for the put request from the frontend and then also did app.use(cors()). I also routed it in the controller as well as adding the logic for it.
 
-Backend: The GET endpoint filters the products in MongoDB by the userEmail field and returns the results.
+**Frontend:** I added the components cart.jsx and cartcomponent.jsx where I will render the frontend for cart page. I also used fetch request to get and display the products in the cart. I also added fetch request to put and update the changes made to the quantity of the page using the + and - icons on each product card.
 
-Frontend: The fetchUserProducts function fetches the filtered data based on the provided email.
+## Milestone 20
 
-Dynamic Rendering: The data is passed to the ProductCard component, which renders a card for each product that belongs to the specified user.
+In this milestone we made the /profile endpoint to get the user data and then save it in an object. after this we made the profile.jsx where we will show all the user details.
 
+## Milestone 21
+
+In this Milestone I made the Address.jsx which consists of a form component where users can enter details such as country, state, pincode etc. I made use of usestate hook to store the inputs and then sent it to the backend using axios. Once the data has been sent to the backend the usenavigate hook kicks in and navigates to the /profile page. (Do note that only the frontend has been done in this milestone).
+
+## Milestone 22
+
+In this milestone I created an enpoint to recieve the data of the address from the frontend. I also used JWT to authenticate the process.
