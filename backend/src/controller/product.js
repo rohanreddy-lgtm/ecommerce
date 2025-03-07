@@ -41,7 +41,7 @@ productrouter.post('/cart',async(req,res)=>{
 
     try{
         if(!email){
-            return res.status(404).json({message: "fill all inputbox"})
+            return res.status(404).json({message:"fill all inputbox"})
         }
        
         if(!mongoose.types.objectId.isValid(productid)){
@@ -53,7 +53,7 @@ productrouter.post('/cart',async(req,res)=>{
 
         const findemail=await userModel.findOne({email:email})
         if(!findemail){
-            return res.status(440).json({message: 'user does not exist'})
+            return res.status(440).json({message:'user does not exist'})
         }
         const findproduct=await Productmodel.findById(productid)
         if(!findproduct){
@@ -101,6 +101,37 @@ catch(err){
     console.log("error in cart for get req")
 }
 
+})
+
+productrouter.put('/edit-cart',async(req,res)=>{
+   const {email,productid,quantity}=req.body
+   try{
+   
+   if(!email||!productid||quantity==undefined){
+    return res.status(404).json({message:"put all details"})
+   }
+   const finduser=await userModel.findOne({email:email})
+   if(!finduser){
+    return res.status(500).json({message:"user is not found"})
+   }
+
+   const findproduct=await Productmodel.findOne({_id:productid})
+   if(!findproduct||findproduct.stock<=0){
+    return res.status(404).json({message:"product not avzailable"})
+   }
+  
+   const findcartproduct=finduser.cart.find(item=>item.productid===productid)
+
+   if(!findcartproduct){
+    return res.status(404).json({message:"can not find"}) 
+   }
+   findcartproduct.quantity=quantity
+   await finduser.save()
+   return res.status(200).json({message:"edited successfully"})
+}
+catch(err){
+    console.log(err)
+}
 })
 
 productrouter.post("/post-product", productupload.array('files'), async (req, res) => {
