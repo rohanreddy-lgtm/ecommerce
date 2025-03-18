@@ -34,9 +34,9 @@ router.post('/create-order', async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Server error' });
     }
-  });
+});
 
-router.get('/get-orders', async (req, res) => {
+router.post('/get-orders', async (req, res) => {
     try {
         const { email } = req.body;
 
@@ -60,4 +60,27 @@ router.get('/get-orders', async (req, res) => {
     }
 });
 
-module.exports = router;
+// Cancel Order Route
+router.put('/cancel-order/:orderId', async (req, res) => {
+    try {
+        const { orderId } = req.params;
+
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        if (order.status === 'Canceled') {
+            return res.status(400).json({ error: 'Order is already canceled' });
+        }
+
+        order.status = 'Canceled';
+        await order.save();
+
+        res.status(200).json({ message: 'Order canceled successfully', order });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
